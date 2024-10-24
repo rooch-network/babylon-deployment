@@ -41,7 +41,7 @@ if [ ! -d "$BTC_STAKER_DIR" ]; then
     exit 1
   fi
 
-  # Copy the btc-staker key to the testnet directory
+  # Copy the btc-staker key to the mounted .btc-staker directory
   cp -R $HOME/.babylond/keyring-test $BTC_STAKER_DIR/
 
   # TODO: we should not use 777

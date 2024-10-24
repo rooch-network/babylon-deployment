@@ -33,13 +33,13 @@ if [ ! -d "$CONSUMER_FINALITY_PROVIDER_DIR" ]; then
   # Check if the default keyring exists
   DEFAULT_KEY_FILE=${HOME}/.babylond/keyring-test/${CONSUMER_FINALITY_PROVIDER_KEY}.info
   if [ ! -f $DEFAULT_KEY_FILE ]; then
-    # echo "Creating default keyring..."
-    # babylond keys add ${CONSUMER_FINALITY_PROVIDER_KEY} --recover --keyring-backend test
     echo "No default keyring found in $DEFAULT_KEY_FILE"
     exit 1
   fi
 
-  # Copy the finality provider key to the testnet directory
+  # Copy the finality provider key to the mounted .consumer-finality-provider directory
+  # TODO: no need to copy the entire repo. We can just copy the key b/c there 
+  # can be multiple keys in the keyring dir
   cp -R $HOME/.babylond/keyring-test $CONSUMER_FINALITY_PROVIDER_DIR/
 
   chmod -R 777 $CONSUMER_FINALITY_PROVIDER_DIR
