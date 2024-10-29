@@ -81,3 +81,13 @@ restart-consumer-finality-provider:
 	@docker compose -f docker/docker-compose-babylon-integration.yml stop consumer-finality-provider
 	@docker compose -f docker/docker-compose-babylon-integration.yml up -d consumer-finality-provider
 .PHONY: restart-consumer-finality-provider
+
+restart-consumer-eotsmanager:
+	@docker compose -f docker/docker-compose-babylon-integration.yml stop consumer-eotsmanager
+	@docker compose -f docker/docker-compose-babylon-integration.yml up -d consumer-eotsmanager
+.PHONY: restart-consumer-eotsmanager
+
+deploy-cw-contract:
+	@docker compose -f docker/docker-compose-babylon-integration.yml up -d deploy-cw-contract
+	@docker logs -f deploy-cw-contract
+.PHONY: deploy-cw-contract
