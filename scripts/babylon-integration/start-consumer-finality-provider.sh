@@ -43,21 +43,24 @@ if [ ! -d "$CONSUMER_FINALITY_PROVIDER_DIR" ]; then
       echo "Generated consumer-finality-provider key $CONSUMER_FINALITY_PROVIDER_KEY"
   fi
   echo
+  CONSUMER_FP_ADDRESS=$(babylond keys show $CONSUMER_FINALITY_PROVIDER_KEY --keyring-backend test --keyring-dir $CONSUMER_FP_KEYRING_DIR --output json | jq -r '.address')
 
   # Copy the finality provider key to the mounted .consumer-finality-provider directory
   cp -R $CONSUMER_FP_KEYRING_DIR/keyring-test $CONSUMER_FINALITY_PROVIDER_DIR/
   echo "Copied the generated key to the $CONSUMER_FINALITY_PROVIDER_DIR directory"
 
-  chmod -R 750 $CONSUMER_FINALITY_PROVIDER_DIR
+  chmod -R 777 $CONSUMER_FINALITY_PROVIDER_DIR
   echo "Successfully initialized $CONSUMER_FINALITY_PROVIDER_DIR directory"
   echo
 fi
 
 # check the balance of the babylon prefunded key
 echo "Checking the balance of the babylon prefunded key $BABYLON_PREFUNDED_KEY..."
-BABYLON_PREFUNDED_KEY_BALANCE=$(babylond query bank balances ${BABYLON_PREFUNDED_KEY} \
---keyring-backend test \
---output json | jq .balances[0].amount)
+PREFUNDED_ADDRESS=$(babylond keys show $BABYLON_PREFUNDED_KEY --keyring-backend test --output json | jq -r '.address')
+BABYLON_PREFUNDED_KEY_BALANCE=$(babylond query bank balances ${PREFUNDED_ADDRESS} \
+    --chain-id $BABYLON_CHAIN_ID \
+    --node $BABYLON_RPC_URL \
+    --output json | jq '.balances[0].amount' | sed 's/[^0-9]*//g')
 if [ $BABYLON_PREFUNDED_KEY_BALANCE -lt $CONSUMER_FP_FUND_AMOUNT ]; then
     echo "Babylon prefunded key balance is less than the funding amount"
     exit 1
@@ -67,10 +70,11 @@ echo "Babylon prefunded key balance: $BABYLON_PREFUNDED_KEY_BALANCE"
 # fund the consumer-finality-provider account
 echo "Funding account $CONSUMER_FINALITY_PROVIDER_KEY..."
 FUND_TX_HASH=$(babylond tx bank send \
-    ${BABYLON_PREFUNDED_KEY} \
-    ${CONSUMER_FINALITY_PROVIDER_KEY} \
-    ${CONSUMER_FP_FUND_AMOUNT} \
+    ${PREFUNDED_ADDRESS} \
+    ${CONSUMER_FP_ADDRESS} \
+    "${CONSUMER_FP_FUND_AMOUNT}ubbn" \
     --chain-id $BABYLON_CHAIN_ID \
+    --node $BABYLON_RPC_URL \
     --keyring-backend test \
     --gas auto \
     --gas-adjustment 1.5 \
