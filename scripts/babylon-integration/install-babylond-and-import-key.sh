@@ -6,6 +6,7 @@ set -a
 source $(pwd)/.env.babylon-integration
 set +a
 
+# Install babylond
 BABYLOND_PATH=/usr/local/bin/babylond
 if [ ! -f "$BABYLOND_PATH" ]; then
     # Download the babylond binary
@@ -51,6 +52,7 @@ echo
 echo "Babylon version: $(babylond version)"
 echo
 
+# Import the babylon prefunded key
 if ! babylond keys show $BABYLON_PREFUNDED_KEY --keyring-backend test &> /dev/null; then
     echo "Importing babylon prefunded key $BABYLON_PREFUNDED_KEY..."
     babylond keys add $BABYLON_PREFUNDED_KEY \
