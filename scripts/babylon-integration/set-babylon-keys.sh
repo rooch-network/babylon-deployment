@@ -9,6 +9,6 @@ if [ ! -d "$DEPLOY_OUTPUT_DIR" ]; then
   mkdir -p $DEPLOY_OUTPUT_DIR
 fi
 
-# deploy the contract
-docker compose -f docker/docker-compose-babylon-integration.yml up -d deploy-cw-contract
-docker logs -f deploy-cw-contract
+# set the babylon keys
+docker compose -f docker/docker-compose-babylon-integration.yml up -d set-babylon-keys
+docker logs -f set-babylon-keys

@@ -1,17 +1,17 @@
-name: publish-bitcoin
+name: publish-set-keys
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'scripts/bitcoin/**'
+      - 'scripts/babylon-integration/set-babylon-keys/**'
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   # Remove the slash at the end of the username
-  IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/bitcoind
+  IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/set-babylon-keys
 
 jobs:
   build:
@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: scripts/bitcoin
+          context: scripts/babylon-integration/set-babylon-keys
           platforms: linux/amd64,linux/arm64
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.set-tag.outputs.TAG }}
           cache-from: type=gha
