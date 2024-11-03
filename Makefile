@@ -93,3 +93,7 @@ set-babylon-keys:
 register-consumer-chain:
 	@./scripts/babylon-integration/register-consumer-chain.sh
 .PHONY: register-consumer-chain
+
+toggle-cw-killswitch:
+	@./scripts/babylon-integration/toggle-cw-killswitch.sh
+.PHONY: toggle-cw-killswitch
