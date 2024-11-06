@@ -58,15 +58,15 @@ A Bitcoin node is required to run the Babylon BTC Staker program. You will need 
 
 If you want to check the Bitcoin node logs, you can run the following command:
 
-    ```bash
-    docker compose -f docker/docker-compose-bitcoin.yml logs -f bitcoind
-    ```
+```bash
+docker compose -f docker/docker-compose-bitcoin.yml logs -f bitcoind
+```
 
 If you want to stop the Bitcoin node (and remove the synced data), you can run the following command:
 
-    ```bash
-    make stop-bitcoin
-    ```
+```bash
+make stop-bitcoin
+```
 
 ## Upgrade OP-stack chain to support BTC staking
 
