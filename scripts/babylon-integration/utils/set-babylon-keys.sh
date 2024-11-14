@@ -22,7 +22,9 @@ fi
 echo
 
 # Create new Babylon account for the consumer-finality-provider
-CONSUMER_FP_KEYRING_DIR=$KEYRING_DIR/$CONSUMER_FINALITY_PROVIDER_KEY
+if CONSUMER_FP_KEYRING_DIR not exist:
+  mkdir CONSUMER_FP_KEYRING_DIR
+# CONSUMER_FP_KEYRING_DIR=$KEYRING_DIR/$CONSUMER_FINALITY_PROVIDER_KEY
 if ! babylond keys show $CONSUMER_FINALITY_PROVIDER_KEY --keyring-dir $CONSUMER_FP_KEYRING_DIR --keyring-backend test &> /dev/null; then
     echo "Creating keyring directory $CONSUMER_FP_KEYRING_DIR"
     mkdir -p $CONSUMER_FP_KEYRING_DIR
@@ -56,7 +58,7 @@ FUND_TX_HASH=$(babylond tx bank send \
     --keyring-dir $KEYRING_DIR \
     --keyring-backend test \
     --gas auto \
-    --gas-adjustment 1.5 \
+    --gas-adjustment 2 \
     --gas-prices 0.2ubbn \
     --output json -y \
     | jq -r '.txhash')
