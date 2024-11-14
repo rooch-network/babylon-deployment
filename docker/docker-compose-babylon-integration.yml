@@ -2,7 +2,7 @@ services:
   # This is a one-off container just for setting the Babylon keys
   set-babylon-keys:
     container_name: set-babylon-keys
-    image: snapchain/babylon-deployment-utils:ed6e196
+    image: snapchain/babylon-deployment-utils:ccab34a
     env_file:
       - "${PWD}/.env.babylon-integration"
     volumes:
@@ -16,7 +16,7 @@ services:
   # This is a one-off container just for registering the consumer chain
   register-consumer-chain:
     container_name: register-consumer-chain
-    image: snapchain/babylon-deployment-utils:ed6e196
+    image: snapchain/babylon-deployment-utils:ccab34a
     env_file:
       - "${PWD}/.env.babylon-integration"
     volumes:
@@ -29,7 +29,7 @@ services:
   # This is a one-off container just for deploying cw contract
   deploy-cw-contract:
     container_name: deploy-cw-contract
-    image: snapchain/babylon-deployment-utils:ed6e196
+    image: snapchain/babylon-deployment-utils:ccab34a
     env_file:
       - "${PWD}/.env.babylon-integration"
     volumes:
@@ -43,7 +43,7 @@ services:
   # This is a one-off container just for setting the finality contract enabled value
   toggle-cw-killswitch:
     container_name: toggle-cw-killswitch
-    image: snapchain/babylon-deployment-utils:ed6e196
+    image: snapchain/babylon-deployment-utils:ccab34a
     env_file:
       - "${PWD}/.env.babylon-integration"
     volumes:
@@ -56,7 +56,7 @@ services:
 
   teardown:
     container_name: teardown
-    image: snapchain/babylon-deployment-utils:ed6e196
+    image: snapchain/babylon-deployment-utils:ccab34a
     env_file:
       - "${PWD}/.env.babylon-integration"
     volumes:
