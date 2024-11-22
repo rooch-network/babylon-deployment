@@ -101,3 +101,7 @@ toggle-cw-killswitch:
 teardown:
 	@./scripts/babylon-integration/teardown.sh
 .PHONY: teardown
+
+proxy-setup:
+	@./scripts/babylon-integration/proxy-setup.sh
+.PHONY: proxy-setup
