@@ -54,6 +54,7 @@ services:
       - -c
       - /toggle-cw-killswitch.sh
 
+  # This is a one-off container just for tearing down the Babylon integration
   teardown:
     container_name: teardown
     image: snapchain/babylon-deployment-utils:fdceb0c
@@ -84,8 +85,8 @@ services:
 
   consumer-eotsmanager:
     container_name: consumer-eotsmanager
-    # https://github.com/babylonlabs-io/finality-provider/commit/45a24e1f5c235a829eaeca3c3336053032ec0088
-    image: babylonlabs/finality-provider:45a24e1f5c235a829eaeca3c3336053032ec0088
+    # https://github.com/babylonlabs-io/finality-provider/pull/213
+    image: babylonlabs/finality-provider:8e8384a11d63e8841c28fe746fd01ff9b585e831
     command: eotsd start
     volumes:
       - ${PWD}/.consumer-eotsmanager:/home/finality-provider/.eotsd
@@ -97,8 +98,8 @@ services:
 
   consumer-finality-provider:
     container_name: consumer-finality-provider
-    # https://github.com/babylonlabs-io/finality-provider/commit/7d341b5d02e3f0e2b27a9a5c5e563a73a6601d50
-    image: babylonlabs/finality-provider:7d341b5d02e3f0e2b27a9a5c5e563a73a6601d50
+    # https://github.com/babylonlabs-io/finality-provider/pull/213
+    image: babylonlabs/finality-provider:8e8384a11d63e8841c28fe746fd01ff9b585e831
     command: fpd start
     volumes:
       - ${PWD}/.consumer-finality-provider:/home/finality-provider/.fpd
@@ -112,8 +113,8 @@ services:
 
   finality-gadget:
     container_name: finality-gadget
-    # https://github.com/babylonlabs-io/finality-gadget/commit/8bdd24c7d32e7ffb8fe06cebcb571cb2ce52db12
-    image: babylonlabs/finality-gadget:8bdd24c7d32e7ffb8fe06cebcb571cb2ce52db12
+    # https://github.com/babylonlabs-io/finality-gadget/commit/ac0ac994d987f202757a4646ccddb8c139b1b64d
+    image: babylonlabs/finality-gadget:ac0ac994d987f202757a4646ccddb8c139b1b64d
     command: >
       opfgd start --cfg /home/finality-gadget/opfgd.toml
     ports:
@@ -127,7 +128,7 @@ services:
 
   finality-explorer:
     container_name: finality-explorer
-    image: snapchain/finality-explorer:sha-3ea3cc3
+    image: snapchain/finality-explorer:sha-7dfdc59
     ports:
       - "13000:3000"
     env_file:
