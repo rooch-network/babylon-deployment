@@ -1,50 +1,29 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "NETWORK: $NETWORK"
-echo "RPC_PORT: $RPC_PORT"
+# Load environment variables from .env.bitcoin and .env.rooch file
+set -a
+source "$(pwd)/.env.bitcoin"
+source "$(pwd)/.env.rooch"
+set +a
 
-if [[ "$NETWORK" != "regtest" && "$NETWORK" != "signet" ]]; then
-  echo "Unsupported network: $NETWORK"
+echo "ROOCH_NETWORK: $ROOCH_NETWORK"
+echo "BITCOIN_RPC_HOST: $BITCOIN_RPC_HOST"
+echo "BITCOIN_RPC_USER: $BITCOIN_RPC_USER"
+echo "BITCOIN_RPC_PASS: $BITCOIN_RPC_PASS"
+
+if [[ "ROOCH_NETWORK" != "local" && "$NETWORK" != "dev" && "$NETWORK" != "test" && "$NETWORK" != "main" ]]; then
+  echo "Unsupported rooch network: ROOCH_NETWORK"
   exit 1
 fi
 
-DATA_DIR=/bitcoind/.bitcoin
-CONF=/bitcoind/bitcoin.conf
-
-echo "Generating bitcoin.conf file at $CONF"
-NETWORK_LABEL="$NETWORK"
-cat <<EOF > "$CONF"
-# Enable ${NETWORK} mode.
-${NETWORK}=1
-
-# Accept command line and JSON-RPC commands
-server=1
-
-# RPC user and password.
-rpcuser=$RPC_USER
-rpcpassword=$RPC_PASS
-
-# ZMQ notification options.
-# Enable publish hash block and tx sequence
-zmqpubsequence=tcp://*:$ZMQ_SEQUENCE_PORT
-# Enable publishing of raw block hex.
-zmqpubrawblock=tcp://*:$ZMQ_RAWBLOCK_PORT
-# Enable publishing of raw transaction.
-zmqpubrawtx=tcp://*:$ZMQ_RAWTR_PORT
-
-txindex=1
-deprecatedrpc=create_bdb
-
-# Fallback fee
-fallbackfee=0.00001
-
-# Allow all IPs to access the RPC server.
-[${NETWORK_LABEL}]
-rpcbind=0.0.0.0
-rpcallowip=0.0.0.0/0
-rpcport=$RPC_PORT
-EOF
-
-echo "Starting bitcoind..."
-bitcoind -${NETWORK} -datadir="$DATA_DIR" -conf="$CONF" -rpcport="$RPC_PORT"
+echo "Starting rooch..."
+#docker run -d --name rooch-mainnet --restart unless-stopped -v /data:/root -p 6767:6767 -p 9184:9184 -e RUST_BACKTRACE=full  "ghcr.io/rooch-network/rooch:$REF" \
+server start -n -${ROOCH_NETWORK} \
+--btc-sync-block-interval 20 \
+--btc-rpc-url "$BITCOIN_RPC_HOST" \
+--btc-rpc-username "$BITCOIN_RPC_USER" \
+--btc-rpc-password "$BITCOIN_RPC_PASS" \
+#--da "{\"da-backend\": {\"backends\": [{\"open-da\": {\"scheme\": \"gcs\", \"config\": {\"bucket\": \"$OPENDA_GCP_MAINNET_BUCKET\", \"credential\": \"$OPENDA_GCP_MAINNET_CREDENTIAL\"}}}]}}" \
+--traffic-burst-size 200 \
+--traffic-per-second 0.1

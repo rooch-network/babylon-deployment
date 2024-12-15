@@ -94,18 +94,19 @@ RUN set -eux; \
     wget "http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.23_amd64.deb"; \
     DEBIAN_FRONTEND=noninteractive dpkg -i libssl1.1_1.1.1f-1ubuntu2.23_amd64.deb;
 
-ENV RELEASE_PATH="/rooch/target/release"
-COPY --from=builder $RELEASE_PATH/rooch \
-     /rooch/
+#ENV RELEASE_PATH="/rooch/target/release"
+#COPY --from=builder $RELEASE_PATH/rooch \
+#     /rooch/
+
+ENV PATH=/opt/rooch-artifacts/bin:$PATH
      
 RUN set -ex \
   && curl -SLO https://github.com/rooch-network/rooch/releases/${ROOCH_VERSION}/download/rooch-ubuntu-latest.zip \
   && tar -xzf *.tar.gz -C /opt
 
 
-WORKDIR /bitcoind
+WORKDIR ~/.rooch
 
+COPY entrypoint.sh /entrypoint.sh
 
-
-ENTRYPOINT [ "/rooch/rooch" ]
-CMD [ "server", "start" ]
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

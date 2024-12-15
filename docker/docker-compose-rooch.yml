@@ -1,0 +1,20 @@
+services:
+  roochd:
+    image: baichuan3/rooch:v0.8.5
+    container_name: rooch
+    env_file:
+      - "${PWD}/.env.rooch"
+    ports:
+      - "${ROOCH_RPC_PORT:-6767}:${ROOCH_RPC_PORT:-6767}"
+      - "${ROOCH_METRICS_PORT:-9184}:${ROOCH_METRICS_PORT:-9184}"
+    volumes:
+      - "rooch_data:/home/.rooch"
+    restart: always
+    networks:
+      - roochd
+
+volumes:
+  rooch_data:
+
+networks:
+  roochd:

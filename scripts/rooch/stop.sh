@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-# Stop the bitcoin container
-docker compose -f "$(pwd)/docker/docker-compose-bitcoin.yml" down
+# Stop the rooch container
+docker compose -f "$(pwd)/docker/docker-compose-rooch.yml" down
 
-# Remove the bitcoin volume
-docker volume ls --filter name=bitcoin_data --format='{{.Name}}' | xargs -r docker volume rm
+# Remove the rooch volume
+docker volume ls --filter name=rooch_data --format='{{.Name}}' | xargs -r docker volume rm
