@@ -30,9 +30,13 @@ start-consumer-finality-provider:
 	@./scripts/babylon-integration/start-consumer-finality-provider.sh
 .PHONY: start-consumer-finality-provider
 
-register-op-consumer-fp:
-	@./scripts/babylon-integration/register-op-consumer-fp.sh
-.PHONY: register-op-consumer-fp
+#register-op-consumer-fp:
+#	@./scripts/babylon-integration/register-op-consumer-fp.sh
+#.PHONY: register-op-consumer-fp
+
+register-rooch-consumer-fp:
+	@./scripts/babylon-integration/register-rooch-consumer-fp.sh
+.PHONY: register-rooch-consumer-fp
 
 stop-consumer-finality-provider:
 	@./scripts/babylon-integration/stop-consumer-finality-provider.sh
