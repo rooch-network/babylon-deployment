@@ -1,20 +1,40 @@
 services:
-  roochd:
-    image: baichuan3/rooch:v0.8.5
-    container_name: rooch
+  roochnode:
+    image: baichuan3/rooch:latest
+    container_name: roochnode
     env_file:
+      - "${PWD}/.env.bitcoin"
       - "${PWD}/.env.rooch"
-    ports:
-      - "${ROOCH_RPC_PORT:-6767}:${ROOCH_RPC_PORT:-6767}"
-      - "${ROOCH_METRICS_PORT:-9184}:${ROOCH_METRICS_PORT:-9184}"
     volumes:
       - "rooch_data:/home/.rooch"
     restart: always
+    command: >
+      babylond --home /babylondhome start --log_format 'plain' 2>&1 | tee /babylondhome/babylond.log
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "6767:6767"
+      - "9184:9184"
     networks:
-      - roochd
+      localnet:
+        ipv4_address: 192.168.11.2
+    volumes:
+      - ../.testnets/rooch:/home/.rooch:Z
+    depends_on:
+      - babylondnode0
 
-volumes:
-  rooch_data:
+#volumes:
+#  bitcoin_data:
+#
+#networks:
+#  bitcoind:
 
 networks:
-  roochd:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/25

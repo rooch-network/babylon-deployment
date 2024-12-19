@@ -136,5 +136,37 @@ services:
       - "${PWD}/.env.babylon-integration"
     restart: unless-stopped
 
+  roochnode:
+    image: baichuan3/rooch:latest
+    container_name: roochnode
+    env_file:
+      - "${PWD}/.env.bitcoin"
+      - "${PWD}/.env.rooch"
+#    volumes:
+#      - "rooch_data:/home/.rooch"
+#    restart: always
+    command: >
+      babylond --home /babylondhome start --log_format 'plain' 2>&1 | tee /babylondhome/babylond.log
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "6767:6767"
+      - "9184:9184"
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.24
+    volumes:
+      - ../.testnets/rooch:/home/.rooch:Z
+#    depends_on:
+#      - babylondnode0
+    restart: unless-stopped
+
 networks:
-  babylon-integration:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/25
