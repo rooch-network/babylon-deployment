@@ -7,8 +7,8 @@ source $(pwd)/.env.babylon-integration
 set +a
 
 EXAMPLE_FINALITY_PROVIDER_CONF=$(pwd)/configs/babylon-integration/consumer-fpd.conf
-CONSUMER_FINALITY_PROVIDER_DIR=$(pwd)/.consumer-finality-provider
-FINALITY_PROVIDER_CONF=$(pwd)/.consumer-finality-provider/fpd.conf
+CONSUMER_FINALITY_PROVIDER_DIR=$(pwd)/.testnets/consumer-finality-provider
+FINALITY_PROVIDER_CONF=$(pwd)/.testnets/consumer-finality-provider/fpd.conf
 
 # Check if the finality provider key exists in the mounted .consumer-finality-provider directory
 if [ ! -f "$CONSUMER_FINALITY_PROVIDER_DIR/keyring-test/$CONSUMER_FINALITY_PROVIDER_KEY.info" ]; then

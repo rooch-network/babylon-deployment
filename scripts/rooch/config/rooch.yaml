@@ -1,0 +1,16 @@
+keystore_path: /root/.rooch/rooch_config/rooch.keystore
+active_address: rooch1uqsvk7kw4n4dyvnt5we0xc0t3fuqseluvzadefgwgsul9lytqnpsqtfnth
+envs:
+- alias: local
+  rpc: http://127.0.0.1:6767
+  ws: null
+- alias: dev
+  rpc: https://dev-seed.rooch.network
+  ws: null
+- alias: test
+  rpc: https://test-seed.rooch.network
+  ws: null
+- alias: main
+  rpc: https://main-seed.rooch.network
+  ws: null
+active_env: local

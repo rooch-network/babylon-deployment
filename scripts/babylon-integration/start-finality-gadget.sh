@@ -7,8 +7,8 @@ source $(pwd)/.env.babylon-integration
 set +a
 
 EXAMPLE_FINALITY_GADGET_CONF=$(pwd)/configs/babylon-integration/roochfgd.toml
-FINALITY_GADGET_DIR=$(pwd)/.finality-gadget
-FINALITY_GADGET_CONF=$(pwd)/.finality-gadget/roochfgd.toml
+FINALITY_GADGET_DIR=$(pwd)/.testnets/finality-gadget
+FINALITY_GADGET_CONF=$(pwd)/.testnets/finality-gadget/roochfgd.toml
 
 if [ ! -d "$FINALITY_GADGET_DIR" ]; then
   echo "Creating $FINALITY_GADGET_DIR directory..."

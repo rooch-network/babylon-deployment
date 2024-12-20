@@ -14,8 +14,7 @@ fi
 
 # Download the contract
 echo "Downloading contract version $CONTRACT_VERSION..."
-#curl -SL "https://github.com/babylonlabs-io/babylon-contract/releases/download/$CONTRACT_VERSION/${CONTRACT_FILE}.zip" -o "${CONTRACT_FILE}.zip"
-curl -SL "https://github.com/rooch-network/babylon-contract/releases/download/$CONTRACT_VERSION/${CONTRACT_FILE}.zip" -o "${CONTRACT_FILE}.zip"
+curl -SL "https://github.com/babylonlabs-io/babylon-contract/releases/download/$CONTRACT_VERSION/${CONTRACT_FILE}.zip" -o "${CONTRACT_FILE}.zip"
 
 # Unzip the contract
 CONTRACT_PATH="./artifacts/$CONTRACT_FILE"

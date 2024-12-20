@@ -21,9 +21,28 @@ fi
 # TODO: for now, we can use the consumer chain name as the consumer description,
 # remove it after issue #255 (https://github.com/babylonlabs-io/babylon/issues/255) is fixed
 echo "Registering consumer chain $CONSUMER_ID..."
+
+echo "babylond tx btcstkconsumer register-consumer \
+    "$CONSUMER_ID" \
+    "$CONSUMER_CHAIN_NAME" \
+    "$FINALITY_CONTRACT_ADDRESS" \
+    "$CONSUMER_CHAIN_NAME" \
+    --chain-id $BABYLON_CHAIN_ID \
+    --node $BABYLON_RPC_URL \
+    --from $BABYLON_PREFUNDED_KEY \
+    --keyring-dir $KEYRING_DIR \
+    --keyring-backend test \
+    --gas-prices 0.2ubbn \
+    --gas auto \
+    --gas-adjustment 2 \
+    -o json -y
+    "
+
+
 CONSUMER_REGISTRATION_OUTPUT=$(babylond tx btcstkconsumer register-consumer \
     "$CONSUMER_ID" \
     "$CONSUMER_CHAIN_NAME" \
+    "$FINALITY_CONTRACT_ADDRESS" \
     "$CONSUMER_CHAIN_NAME" \
     --chain-id $BABYLON_CHAIN_ID \
     --node $BABYLON_RPC_URL \
@@ -43,7 +62,8 @@ echo
 
 # wait for the transaction to be included in a block
 echo "Waiting for the transaction to be included in a block..."
-wait_for_tx "$CONSUMER_REGISTRATION_TX_HASH" 10 5
+# wait_for_tx "$CONSUMER_REGISTRATION_TX_HASH" 10 5
+sleep 10
 
 # check chain registered
 echo "Checking if the chain is registered..."

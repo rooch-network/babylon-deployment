@@ -1,4 +1,5 @@
 FROM debian:bookworm-slim
+# FROM babylonlabs-io/babylond:latest
 
 ARG BABYLOND_VERSION="euphrates-0.5.0-rc.0"
 ARG BABYLOND_FILE="babylond-linux-amd64"
@@ -6,10 +7,10 @@ ARG BABYLOND_FILE="babylond-linux-amd64"
 RUN apt-get update && apt-get install -y bash wget curl unzip jq
 
 # Download the babylond binary
-RUN echo "Downloading babylond with the version $BABYLOND_VERSION..."
-RUN curl -SL "https://github.com/Snapchain/babylond/releases/download/$BABYLOND_VERSION/${BABYLOND_FILE}" -o "${BABYLOND_FILE}"
-RUN mv ${BABYLOND_FILE} /bin/babylond
-RUN chmod +x /bin/babylond
+# RUN echo "Downloading babylond with the version $BABYLOND_VERSION..."
+# RUN curl -SL "https://github.com/Snapchain/babylond/releases/download/$BABYLOND_VERSION/${BABYLOND_FILE}" -o "${BABYLOND_FILE}"
+# RUN mv ${BABYLOND_FILE} /bin/babylond
+# RUN chmod +x /bin/babylond
 
 # Install libraries
 # Cosmwasm - Download correct libwasmvm version
@@ -28,3 +29,6 @@ COPY common.sh /common.sh
 COPY deploy-cw-contract.sh /deploy-cw-contract.sh
 COPY toggle-cw-killswitch.sh /toggle-cw-killswitch.sh
 COPY teardown.sh /teardown.sh
+
+COPY babylond /bin/babylond
+RUN chmod +x /bin/babylond

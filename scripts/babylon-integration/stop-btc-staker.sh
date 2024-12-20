@@ -5,7 +5,7 @@ echo "Stopping btc-staker..."
 docker compose -f docker/docker-compose-babylon-integration.yml down btc-staker
 
 echo "Removing btc-staker directory..."
-sudo rm -rf $(pwd)/.btc-staker
+sudo rm -rf $(pwd)/.testnets/btc-staker
 
 echo "Stopped btc-staker"
 echo

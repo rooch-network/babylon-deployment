@@ -7,8 +7,8 @@ source $(pwd)/.env.babylon-integration
 set +a
 
 EXAMPLE_EOTS_MANAGER_CONF=$(pwd)/configs/babylon-integration/consumer-eotsd.conf
-CONSUMER_EOTS_MANAGER_DIR=$(pwd)/.consumer-eotsmanager
-EOTS_MANAGER_CONF=$(pwd)/.consumer-eotsmanager/eotsd.conf
+CONSUMER_EOTS_MANAGER_DIR=$(pwd)/.testnets/consumer-eotsmanager
+EOTS_MANAGER_CONF=$(pwd)/.testnets/consumer-eotsmanager/eotsd.conf
 
 # Only run if the directory does not exist
 if [ ! -d "$CONSUMER_EOTS_MANAGER_DIR" ]; then

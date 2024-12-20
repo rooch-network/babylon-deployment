@@ -14,12 +14,14 @@ fi
 
 # Download the contract
 echo "Downloading contract version $CONTRACT_VERSION..."
-curl -SL "https://github.com/babylonlabs-io/babylon-contract/releases/download/$CONTRACT_VERSION/${CONTRACT_FILE}.zip" -o "${CONTRACT_FILE}.zip"
+#curl -SL "https://github.com/babylonlabs-io/babylon-contract/releases/download/$CONTRACT_VERSION/${CONTRACT_FILE}.zip" -o "${CONTRACT_FILE}.zip"
+# curl -SL "https://github.com/rooch-network/babylon-contract/releases/download/$CONTRACT_VERSION/${CONTRACT_FILE}.zip" -o "${CONTRACT_FILE}.zip"
+curl -SL "https://github.com/rooch-network/babylon-contract/releases/download/v0.0.1/rooch_finality_gadget.wasm.zip" -o "rooch_finality_gadget.wasm.zip"
 
 # Unzip the contract
 CONTRACT_PATH="./artifacts/$CONTRACT_FILE"
 echo "Unzipping contract..."
-unzip -o "${CONTRACT_FILE}.zip" -d .
+unzip -o "rooch_finality_gadget.wasm.zip" -d .
 # Verify the contract file exists
 if [ ! -f "$CONTRACT_PATH" ]; then
     echo "Error: Contract file not found at $CONTRACT_PATH"

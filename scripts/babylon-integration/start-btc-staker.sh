@@ -7,9 +7,9 @@ source $(pwd)/.env.babylon-integration
 set +a
 
 EXAMPLE_BTC_STAKER_CONF=$(pwd)/configs/babylon-integration/stakerd.conf
-BTC_STAKER_DIR=$(pwd)/.btc-staker
-BTC_STAKER_CONF=$(pwd)/.btc-staker/stakerd.conf
-PREFUNDED_KEYRING_DIR=$(pwd)/.deploy/babylond
+BTC_STAKER_DIR=$(pwd)/.testnets/btc-staker
+BTC_STAKER_CONF=$(pwd)/.testnets/btc-staker/stakerd.conf
+PREFUNDED_KEYRING_DIR=$(pwd)/.testnets/babylond
 
 # Only run if the directory does not exist
 if [ ! -d "$BTC_STAKER_DIR" ]; then
